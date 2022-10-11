@@ -4,13 +4,17 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const user_route_1 = __importDefault(require("../modules/user/user.route"));
+const auth_1 = __importDefault(require("../shared/module/auth"));
 const router = express_1.default.Router();
 const defaultRoutes = [
     {
         path: "/auth/",
-        route: user_route_1.default,
+        route: auth_1.default,
     },
+    // {
+    //   path: "/customer/",
+    //   route: userRoute,
+    // },
 ];
 defaultRoutes.forEach((route) => {
     router.use(route.path, route.route);

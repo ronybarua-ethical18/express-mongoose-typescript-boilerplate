@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
 const app_1 = __importDefault(require("./app"));
 const config_1 = __importDefault(require("./config/config"));
-const errors_1 = require("./modules/errors");
+const errors_1 = require("./shared/errors");
 let server;
 //server connect
 mongoose_1.default.connect(config_1.default.mongoose.url).then(() => {

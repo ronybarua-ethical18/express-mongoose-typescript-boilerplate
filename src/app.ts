@@ -1,13 +1,13 @@
 import express, { Express } from "express";
 import helmet from "helmet";
-import ExpressMongoSanitize from "express-mongo-sanitize";
+// import ExpressMongoSanitize from "express-mongo-sanitize";
 import compression from "compression";
 import cors from "cors";
-const logger = require("morgan");
+import logger from "morgan";
 // import passport from "passport";
 import httpStatus from "http-status";
 import routes from './routes'
-import { ApiError, errorConverter, errorHandler } from "./modules/errors";
+import { ApiError, errorConverter, errorHandler } from "./shared/errors";
 
 const app: Express = express();
 
@@ -22,19 +22,19 @@ app.options("*", cors());
 app.use(express.json());
 
 // parse urlencoded request body
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: false }));
 
 // logger
 app.use(logger("dev"));
 
 // sanitize request data to remove unwanted characters from req.body, req.query, req.params ($, . etc ..)
-app.use(ExpressMongoSanitize());
+// app.use(ExpressMongoSanitize());
 
 // gzip compression
 app.use(compression());
 
 // v1 api routes
-app.use('/v1', routes);
+app.use('/api/v1', routes);
 
 // send back a 404 error for any unknown api request
 app.use((_req, _res, next) => {

@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import app from "./app";
 import config from "./config/config";
-import { ApiError } from "./modules/errors";
+import { ApiError } from "./shared/errors";
 
 let server: any;
 

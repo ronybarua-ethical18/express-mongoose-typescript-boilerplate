@@ -1,5 +1,5 @@
 import express, { Router } from "express";
-import userRoute from "../modules/user/user.route";
+import authRoute from '../shared/module/auth'
 
 const router = express.Router();
 
@@ -10,8 +10,12 @@ interface IRoute {
 const defaultRoutes: IRoute[] = [
   {
     path: "/auth/",
-    route: userRoute,
+    route: authRoute,
   },
+  // {
+  //   path: "/customer/",
+  //   route: userRoute,
+  // },
 ];
 
 defaultRoutes.forEach((route) => {
