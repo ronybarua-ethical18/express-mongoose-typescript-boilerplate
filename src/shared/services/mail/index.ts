@@ -17,7 +17,7 @@ const sendEmail = async (
       to: receiverEmail,
       subject: context.subject,
       template: template,
-      context: context.data,
+      context: context.data
     });
     console.log(reports)
   } catch (err) {

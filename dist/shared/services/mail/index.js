@@ -8,7 +8,7 @@ const sendEmail = async (receiverEmail, context, template) => {
             to: receiverEmail,
             subject: context.subject,
             template: template,
-            context: context.data,
+            context: context.data
         });
         console.log(reports);
     }
