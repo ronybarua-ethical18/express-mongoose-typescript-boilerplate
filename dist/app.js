@@ -18,7 +18,6 @@ const app = (0, express_1.default)();
 app.use((0, helmet_1.default)());
 // enable cors
 app.use((0, cors_1.default)());
-app.options("*", (0, cors_1.default)());
 // parse json request body
 app.use(express_1.default.json());
 // parse urlencoded request body

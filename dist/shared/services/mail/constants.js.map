@@ -1,1 +1,1 @@
-{"version":3,"file":"constants.js","sourceRoot":"","sources":["../../../../src/shared/services/mail/constants.ts"],"names":[],"mappings":";;;AAAa,QAAA,qBAAqB,GAAU,wBAAwB,CAAC;AACxD,QAAA,yBAAyB,GAAU,iBAAiB,CAAC"}
+{"version":3,"file":"constants.js","sourceRoot":"","sources":["../../../../src/shared/services/mail/constants.ts"],"names":[],"mappings":";;;AAAa,QAAA,qBAAqB,GAAU,cAAc,CAAC;AAC9C,QAAA,yBAAyB,GAAU,iBAAiB,CAAC"}

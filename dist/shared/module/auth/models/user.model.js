@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
 const validator_1 = __importDefault(require("validator"));
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
-const user_role_1 = require("../user.role");
+const user_types_1 = require("../types/user.types");
 const userSchema = new mongoose_1.default.Schema({
     name: {
         type: String,
@@ -32,7 +32,7 @@ const userSchema = new mongoose_1.default.Schema({
     },
     role: {
         type: String,
-        enum: user_role_1.roles,
+        enum: user_types_1.Role,
         default: "user",
     },
     stores: [],

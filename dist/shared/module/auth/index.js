@@ -4,14 +4,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const user_login_1 = require("./controllers/user.login");
-const user_set_password_1 = require("./controllers/user.set_password");
-const user_signup_1 = require("./controllers/user.signup");
-// import { signup } from "./services/user.service";
+const controllers_1 = __importDefault(require("./controllers/"));
 const router = express_1.default.Router();
-router.post("/signup", user_signup_1.signup);
-router.post("/login", user_login_1.login);
-router.post("/set-password", user_set_password_1.setPassword);
-// router.post("login", signup);
+// auth routes
+router.post("/signup", controllers_1.default.signup);
+router.post("/verify-email", controllers_1.default.verifyEmail);
+router.post("/login", controllers_1.default.login);
+router.post("/forgot-password", controllers_1.default.forgotPassword);
+router.post("/reset-password", controllers_1.default.resetPassword);
+router.post("/refresh-token", controllers_1.default.refreshTokens);
 exports.default = router;
 //# sourceMappingURL=index.js.map

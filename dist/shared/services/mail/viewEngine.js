@@ -4,10 +4,10 @@ const path = require("path");
 const handlebarOptions = {
     viewEngine: {
         extName: ".handlebars",
-        partialsDir: path.resolve(__dirname, "template"),
+        partialsDir: path.resolve(__dirname, "templates"),
         defaultLayout: false,
     },
-    viewPath: path.resolve(__dirname, "template"),
+    viewPath: path.resolve(__dirname, "templates"),
     extName: ".handlebars",
 };
 exports.default = handlebarOptions;

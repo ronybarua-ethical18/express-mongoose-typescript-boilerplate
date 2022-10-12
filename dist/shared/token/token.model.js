@@ -13,12 +13,12 @@ const tokenSchema = new mongoose_1.default.Schema({
     },
     user: {
         type: String,
-        ref: "User",
+        ref: 'User',
         required: true,
     },
     type: {
         type: String,
-        enum: [token_types_1.default.REFRESH, token_types_1.default.ACCESS],
+        enum: [token_types_1.default.REFRESH, token_types_1.default.RESET_PASSWORD, token_types_1.default.VERIFY_EMAIL],
         required: true,
     },
     expires: {
@@ -32,6 +32,6 @@ const tokenSchema = new mongoose_1.default.Schema({
 }, {
     timestamps: true,
 });
-const Token = mongoose_1.default.model("Token", tokenSchema);
+const Token = mongoose_1.default.model('Token', tokenSchema);
 exports.default = Token;
 //# sourceMappingURL=token.model.js.map

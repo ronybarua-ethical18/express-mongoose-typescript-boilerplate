@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import validator from "validator";
 import bcrypt from "bcryptjs";
 import { IUserInfo, IUserModel } from "../interfaces/user.interface";
-import { roles } from "../user.role";
+import { Role } from "../types/user.types";
 
 const userSchema = new mongoose.Schema<IUserInfo, IUserModel>({
   name: {
@@ -29,7 +29,7 @@ const userSchema = new mongoose.Schema<IUserInfo, IUserModel>({
   },
   role: {
     type: String,
-    enum: roles,
+    enum: Role,
     default: "user",
   },
   stores:[],

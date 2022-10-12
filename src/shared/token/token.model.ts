@@ -1,6 +1,6 @@
-import mongoose from "mongoose";
-import tokenTypes from "./token.types";
-import { IToken } from "./token.interface";
+import mongoose from 'mongoose';
+import { IToken } from './token.interface';
+import tokenTypes from './token.types';
 
 const tokenSchema = new mongoose.Schema<IToken>(
   {
@@ -11,12 +11,12 @@ const tokenSchema = new mongoose.Schema<IToken>(
     },
     user: {
       type: String,
-      ref: "User",
+      ref: 'User',
       required: true,
     },
     type: {
       type: String,
-      enum: [tokenTypes.REFRESH, tokenTypes.ACCESS],
+      enum: [tokenTypes.REFRESH, tokenTypes.RESET_PASSWORD, tokenTypes.VERIFY_EMAIL],
       required: true,
     },
     expires: {
@@ -33,6 +33,6 @@ const tokenSchema = new mongoose.Schema<IToken>(
   }
 );
 
-const Token = mongoose.model<IToken>("Token", tokenSchema);
+const Token = mongoose.model<IToken>('Token', tokenSchema);
 
 export default Token;

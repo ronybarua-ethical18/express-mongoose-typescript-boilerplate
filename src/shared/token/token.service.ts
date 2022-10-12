@@ -1,13 +1,14 @@
-import jwt from "jsonwebtoken";
-import moment, { Moment } from "moment";
-import mongoose from "mongoose";
-import httpStatus from "http-status";
-import config from "../../config/config";
-import Token from "./token.model";
-import ApiError from "../errors/ApiError";
-import tokenTypes from "./token.types";
-import { AccessAndRefreshTokens, IToken } from "./token.interface";
-import { IUserInfo } from "../../shared/module/auth/interfaces/user.interface";
+import jwt from 'jsonwebtoken';
+import moment, { Moment } from 'moment';
+import mongoose from 'mongoose';
+import httpStatus from 'http-status';
+import config from '../../config/config';
+import Token from './token.model';
+import ApiError from '../errors/ApiError';
+import tokenTypes from './token.types';
+import { AccessAndRefreshTokens, IToken } from './token.interface';
+import { IUserInfo } from '../module/auth/interfaces/user.interface';
+import UserModel from '../module/auth/models/user.model'
 
 /**
  * Generate token
@@ -64,13 +65,10 @@ export const saveToken = async (
  * @param {string} type
  * @returns {Promise<ITokenDoc>}
  */
-export const verifyToken = async (
-  token: string,
-  type: string
-): Promise<IToken> => {
+export const verifyToken = async (token: string, type: string): Promise<IToken> => {
   const payload = jwt.verify(token, config.jwt.secret);
-  if (typeof payload.sub !== "string") {
-    throw new ApiError(httpStatus.BAD_REQUEST, "bad user");
+  if (typeof payload.sub !== 'string') {
+    throw new ApiError(httpStatus.BAD_REQUEST, 'bad user');
   }
   const tokenDoc = await Token.findOne({
     token,
@@ -79,44 +77,23 @@ export const verifyToken = async (
     blacklisted: false,
   });
   if (!tokenDoc) {
-    throw new Error("Token not found");
+    throw new Error('Token not found');
   }
   return tokenDoc;
 };
 
 /**
  * Generate auth tokens
- * @param {IUserInfo} user
+ * @param {IUserDoc} user
  * @returns {Promise<AccessAndRefreshTokens>}
  */
-export const generateAuthTokens = async (
-  user: IUserInfo
-): Promise<AccessAndRefreshTokens> => {
-  const accessTokenExpires = moment().add(
-    config.jwt.accessExpirationMinutes,
-    "minutes"
-  );
-  const accessToken = generateToken(
-    user.id,
-    accessTokenExpires,
-    tokenTypes.ACCESS
-  );
+export const generateAuthTokens = async (user: IUserInfo): Promise<AccessAndRefreshTokens> => {
+  const accessTokenExpires = moment().add(config.jwt.accessExpirationMinutes, 'minutes');
+  const accessToken = generateToken(user.id, accessTokenExpires, tokenTypes.ACCESS);
 
-  const refreshTokenExpires = moment().add(
-    config.jwt.refreshExpirationDays,
-    "days"
-  );
-  const refreshToken = generateToken(
-    user.id,
-    refreshTokenExpires,
-    tokenTypes.REFRESH
-  );
-  await saveToken(
-    refreshToken,
-    user.id,
-    refreshTokenExpires,
-    tokenTypes.REFRESH
-  );
+  const refreshTokenExpires = moment().add(config.jwt.refreshExpirationDays, 'days');
+  const refreshToken = generateToken(user.id, refreshTokenExpires, tokenTypes.REFRESH);
+  await saveToken(refreshToken, user.id, refreshTokenExpires, tokenTypes.REFRESH);
 
   return {
     access: {
@@ -128,4 +105,36 @@ export const generateAuthTokens = async (
       expires: refreshTokenExpires.toDate(),
     },
   };
+};
+
+export const generateResetPasswordToken = async (
+  email: string
+): Promise<string> => {
+  const user = await UserModel.findOne({ email: email });
+  if (!user) {
+    throw new ApiError(httpStatus.NOT_FOUND, "No users found with this email");
+  }
+  const expires = moment().add(
+    config.jwt.resetPasswordExpirationMinutes,
+    "minutes"
+  );
+  const resetPasswordToken = generateToken(
+    user.id,
+    expires,
+    tokenTypes.RESET_PASSWORD
+  );
+  await saveToken(
+    resetPasswordToken,
+    user.id,
+    expires,
+    tokenTypes.RESET_PASSWORD
+  );
+  return resetPasswordToken;
+};
+
+export const generateVerifyEmailToken = async (user: IUserInfo): Promise<string> => {
+  const expires = moment().add(config.jwt.verifyEmailExpirationMinutes, 'minutes');
+  const verifyEmailToken = generateToken(user.id, expires, tokenTypes.VERIFY_EMAIL);
+  await saveToken(verifyEmailToken, user.id, expires, tokenTypes.VERIFY_EMAIL);
+  return verifyEmailToken;
 };

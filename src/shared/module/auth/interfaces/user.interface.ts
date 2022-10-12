@@ -1,5 +1,5 @@
 import mongoose, { Document, Model } from "mongoose";
-import { AccessAndRefreshTokens } from "../../../../shared/token/token.interface";
+import { AccessAndRefreshTokens } from "../../../token/token.interface";
 
 interface IUser {
   name: string;

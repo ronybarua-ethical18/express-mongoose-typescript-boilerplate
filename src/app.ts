@@ -16,7 +16,6 @@ app.use(helmet());
 
 // enable cors
 app.use(cors());
-app.options("*", cors());
 
 // parse json request body
 app.use(express.json());
